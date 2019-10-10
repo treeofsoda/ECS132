@@ -8,6 +8,8 @@ simplate <- function(nreps,p){
         
         returns: probability where area of broken tile < p
   "
+  prob = mean(replicate(nreps,singplate(p)))
+  return(prob)
 
 }
 
