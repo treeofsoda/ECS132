@@ -1,3 +1,52 @@
+################# PROBLEM A ##########################################
+leave_single <-function(){
+  "
+  leave_two: Function that use simulation to determine if the passenger alighting at stop 2 belonges to a pair.
+  "
+  ## define the 3 points that will be used to check how many individuals board the bus
+  #P_INDIVIDUAL_NONE = 0.5
+  #P_INDIVIDUAL_SINGLE = 0.9
+  #P_INDIVIDUAL_DOUBLE = 1
+  P_ALIGHT = 0.2
+  #passengers count as individuals and pairs
+  count_pair = 0
+  
+  ## define the 3 points that will be used to check how many pairs board the bus
+  P_PAIR_NONE = 0.4
+  P_PAIR_SINGLE = 1
+  
+  #Simulate the boarding process at Stop 1
+  #p_individual_b1 = runif(1)
+  p_pair_b1 = runif(1)
+  if (p_pair_b1>=0.4){count_pair = count_pair + 1}
+  else{return (FALSE)}
+  
+  #Simulate departure process at stop 2
+  p_pair_l2 = runif(1)
+  if (p_pair_l2< 0.2){return (TRUE)}
+  else{return (FALSE)}
+}
+
+leave_simulate <-function(nreps){
+  '
+  leave_simulate: Function that finds the probability that a passenger alighting at stop 2 belonges to a pair 
+  
+  params:
+        nreps: number of repitions of the simulation
+        
+        returns: probability that a passenger alighting at stop 2 belonges to a pair 
+  '
+  prob = mean(replicate(nreps,leave_single()))
+  return(prob)
+}
+
+
+
+
+
+
+
+################# PROBLEM C ##########################################
 simplate <- function(nreps,p){
   "
   simplate: Function that runs the simulation for breaking of a tile and returns the probability s.t. area is less that 
