@@ -29,21 +29,11 @@ singplate <- function(p){
 
   for (i in c(0,1)){
     y = m * i + intercept
-    if (y<0 | y>1){
-      print("Messed up y")
-    }
-    else{
-      x_cut <- rbind(x_cut, c(i,y))
-    }
-    
+    if(y>=0 & y <=1){x_cut <- rbind(x_cut, c(i,y))}
     x = (i - intercept)/m
-    if (x<0 | x>1){
-      print("Messed up X")
-    }
-    else{
-      y_cut <- rbind(y_cut, c(x,i))
-    }
+    if(x>=0 & x <=1){y_cut <- rbind(y_cut, c(x,i))}
   } #End for 
+  
   #Find edge points
   ### CASE A 
   if (dim(x_cut)[1] == 2){ #Check for points going through opposite edges
