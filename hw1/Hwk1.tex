@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+%\usepackage[margin=1in]{geometry}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate, enumitem}
+\usepackage{fancyhdr, graphicx, proof, comment, multicol}
+\usepackage[none]{hyphenat} % This command prevents hyphenation of words
+
+%    Good website with common symbols
+% http://www.artofproblemsolving.com/wiki/index.php/LaTeX%3ASymbols
+%    How to change enumeration using enumitem package
+% http://tex.stackexchange.com/questions/129951/enumerate-tag-using-the-alphabet-instead-of-numbers
+%    Quick post on headers
+% http://timmurphy.org/2010/08/07/headers-and-footers-in-latex-using-fancyhdr/
+%    Info on alignat
+% http://tex.stackexchange.com/questions/229799/align-words-next-to-the-numbering
+% http://tex.stackexchange.com/questions/43102/how-to-subtract-two-equations
+%    Text align left-center-right
+% http://tex.stackexchange.com/questions/55472/how-to-make-text-aligned-left-center-right-in-the-same-line
+\usepackage{microtype} % Modifies spacing between letters and words
+\usepackage{mathpazo} % Modifies font. Optional package.
+\usepackage{mdframed} % Required for boxed problems.
+\usepackage{parskip} % Left justifies new paragraphs.
+\linespread{1.1} 
+
+
+\newenvironment{problem}[1]
+{\begin{mdframed}[linewidth=0.6pt]
+        \textsc{Problem #1:}
+
+}
+    {\end{mdframed}}
+
+\newenvironment{solution}
+    {\textsc{Solution:}\\}
+    {\newpage}% puts a new page after the solution
+    
+\newenvironment{statement}[1]
+{\begin{mdframed}[linewidth=0.6pt]
+        \textsc{ #1:}
+
+}
+    {\end{mdframed}}
+
+%\newenvironment{prf}
+ %   {\textsc{Proof:}\\}
+ %   {\newpage}% puts a new page after the solution
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\begin{document}
+
+\noindent
+\textbf{ECS132} \hfill \textbf{Atharva Chalke} \\
+\normalsize Prof. Matloff \hfill Due Date: 10/14/19 \\
+
+
+\begin{center}
+\textbf{Homework 1}
+\end{center}
+
+% This is how you call the environment for the statement to be proved.
+\begin{statement}{Problem A}
+This will be a variant of the bus ridership problem, Sec. 2.11.
+
+In addition to individual riders boarding the bus, there may be pairs, e.g. parent and child. At any stop, either 0 pairs or 1 pair will board, with probability 0.4 and 0.6, respectively. Similarly, any pair already on board will alight at a stop, with probability 0.2. Pairs act independently from individuals and from other pairs.
+
+1. Find P(L2 = 0).
+
+2. A newspaper photograph of the bus arriving at the second stop shows a passenger alighting. Find the probability that this passenger was part of a pair.
+\end{statement}
+
+% This is how you call the proof environment
+\subsection*{Solution}
+\textbf{Definitions}\\
+Let L$_i$ denote the number of passengers on the bus as it leaves the $i^{th}$ stop, i = 1,2,3......\\
+Let $B_i$ denote the number of individual new passengers who board the bus at the $i^{th}$ stop.\\
+Let $R_i$ denote the number of paired new passengers who board the bus at the $i^{th}$ stop.\\\\
+\textbf{Assumptions}\\
+The pairs who board together, also leave together.
+\begin{align}
+P(L_2=0) & = P(B_1=0\ and\ R_1=0\ and\ L_2= 0)\ +  P(B_1=0\ and\ R_1=2\ and\ L_2= 0)\  \nonumber \\
+  & \qquad + P(B_1=1\ and\ R_1=0\ and\ L_2= 0)\ + P(B_1=1\ and\ R_1=2\ and\ L_2= 0)\  \nonumber \\
+  & \qquad + P(B_1=2\ and\ R_1=0\ and\ L_2= 0)\ + P(B_1=2\ and\ R_1=0\ and\ L_2= 0)\  \nonumber \\
+  & = \sum_{i=0}^{2} P(B_1=i\ and\ R_1=0\ and\ L_2= 0)\ +  P(B_1=i\ and\ R_1=2\ and\ L_2= 0) \nonumber
+\end{align}
+Lets solve this for each i
+\newpage
+\textbf{i = 0 }\\
+\begin{align}
+ & = P(B_1=0\ and\ R_1=0\ and\ L_2= 0)\ +  P(B_1=0\ and\ R_1=2\ and\ L_2= 0)   \nonumber \\
+ & = P(B_1=0\ and\ R_1=0\ ) * P(L_2=0 |B_1=0\ and\ R_1=0\ )    \nonumber \\
+ & \qquad + P(B_1=0\ and\ R_1=2\ ) * P(L_2=0 |B_1=0\ and\ R_1=2\ )\quad [Using  P(A and B) = P(A) * P(B|A)] \nonumber \\
+ & = 0.5 * 0.4*0.5*0.4\ + 0.5*0.6*0.5*0.4*0.2 \nonumber\\
+ & = 0.052 \nonumber
+\end{align}
+\textbf{i = 1 }\\
+\begin{align}
+ & = P(B_1=1\ and\ R_1=0\ and\ L_2= 0)\ +  P(B_1=1\ and\ R_1=2\ and\ L_2= 0)   \nonumber \\
+ & = P(B_1=1\ and\ R_1=0\ ) * P(L_2=0 |B_1=1\ and\ R_1=0\ )    \nonumber \\
+ & \qquad + P(B_1=1\ and\ R_1=2\ ) * P(L_2=0 |B_1=1\ and\ R_1=2\ )\quad [Using  P(A and B) = P(A) * P(B|A)] \nonumber \\
+ & = 0.4 * 0.4 * 0.5*0.4*0.2\ + 0.4*0.6*0.5*0.4*0.2*0.2 \nonumber\\
+ & = 0.00832 \nonumber
+\end{align}
+\textbf{i = 2 }\\
+\begin{align}
+ & = P(B_1=2\ and\ R_1=0\ and\ L_2= 0)\ +  P(B_1=2\ and\ R_1=2\ and\ L_2= 0)   \nonumber \\
+ & = P(B_1=2\ and\ R_1=0\ ) * P(L_2=0 |B_1=2\ and\ R_1=0\ )    \nonumber \\
+ & \qquad + P(B_1=2\ and\ R_1=2\ ) * P(L_2=0 |B_1=2\ and\ R_1=2\ )\quad [Using  P(A and B) = P(A) * P(B|A)] \nonumber \\
+ & = 0.1*0.4*0.4*0.5*0.2^2\ + 0.6*0.1*0.5*0.4*0.2^3  \nonumber\\
+ & = 0.000416 \nonumber
+\end{align}
+\textbf{Final Answer}\\
+Summing up these values we get 
+\begin{align}
+    & = 0.052 + 0.00832 + 0.000416 \nonumber\\
+    & = 0.060736 \nonumber
+\end{align}
+\textbf{Part 2}\\
+Since we assume that people in pairs get off together, if we see only one person get off they cannot be part of the pair. Therefore, the probability that the person was part of a pair is 0.
+\newpage
+%------------%
+\begin{statement}{Problem B}
+Consider a communications line in which bits are 1 or 0, independently with probability p each. At any given bit, the line will fail, independently with probability q. Once the line has failed, it stays failed until it is repaired, reporting each bit as 0 regardless of the bit's true value. Of course, a long string of 0s should make us suspicious and cause us to inspect the line. Let Bi denote the actual value of the ith bit, and Ri the reported value, i = 1,2,3,...
+
+Your answers to Parts 1 and 2 must be in closed form, i.e. no Σ and the like; use Properties of Geometric Series, pp.73-74.
+
+Find P(Bi = Ri) for i = 1,2,3,...
+Say you have software monitoring the line, which will flag a possible problem whenever it observes k consecutive 0s (i.e. a 1 followed by k 0s, the last of which is the most recent bit). Find the probability that a flag is raised at bit r.
+Write a function with call form
+simline(nreps,p,q,k,r)
+that finds via simulation the probability that a flag is raised at bit r but not before that time
+
+\end{statement}
+\newpage
+%------------%
+\begin{statement}{Problem C}
+This problem will be similar to the broken rod example, Sec. 2.14.10.
+
+Say we have a square plate, length 1.0 on each side. The plate is dropped, and breaks into two pieces, as follows: A break point occurs at a random point in the square (call runif() twice), and then along a random angle between 0 and π.
+
+Write a function with call form
+
+simplate(nreps,p)
+that finds by simulation the probability that the smaller piece has area less than p.
+\end{statement}
+\subsection*{Solution}
+
+ 
+
+
+
+
+`
+
+
+\end{document}
+%--------------%
+P(L$_2$=0) = P(B$_1$ = 0 and R$_1$=0  and  L$_2$ = 0  or B$_1$ = 0 and R$_1$=2  and  L$_2$ = 0  or\\
+            &   B$_1$ = 1 and R$_1$=0  and  L$_2$ = 0 or 
+We would like to prove that $ \sum_{k=1}^n k = \frac{n(n+1}{2}$ so we proceed by induction. \\
+
+\textbf{Base Case}. For $n = 1$ we see that the left hand side of (\ref{bree}) is 1 whereas the right hand side is given by 
+$$ \frac{1(1+1)}{2}= 1. $$
+as well. Hence the statement is true for $n =1$ \\
+
+\textbf{Induction Case}. Assume that the statement holds for n+1, that is we need to show that
+\begin{align*}
+ 1 + 2 + 3 + \dotsc + n + (n+1) &= \frac{(n+1)((n+1)+1)}{2} \\
+ & = \frac{(n+1)(n+2)}{2}
+\end{align*}
+Thus we will begin with the left hand side of (\ref{bree}) to reach our conclusion. By our assumption we know that 
+$$ 1 + 2 + 3 + \dotsc + n + (n+1) = \frac{n(n+1)}{2} + (n+1)
+$$
+Thus we use a bit of algebra as follows to reach our conclusion: 
+\begin{align*}
+    1 + 2 + 3 + \dotsc + n+ (n+1) & = \frac{n(n+1)}{2}+ (n+1) \\ 
+    & = \frac{n(n+1)}{2} + \frac{2(n+1)}{2} \\
+    & = \frac{(n+1)(n+2)}{2}.
+\end{align*}
+Thus by induction we see that statement (\ref{bree}) is true.
