@@ -95,8 +95,6 @@ singplate <- function(p){
     if (a3<p){return (TRUE)}
     else{return (FALSE)}
   }
-  
-  
 }
 
 "Function that returns the lower value"
