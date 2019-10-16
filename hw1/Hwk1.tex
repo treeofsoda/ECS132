@@ -73,17 +73,19 @@ In addition to individual riders boarding the bus, there may be pairs, e.g. pare
 
 1. Find P(L2 = 0).
 
-2. A newspaper photograph of the bus arriving at the second stop shows a passenger alighting. Find the probability that this passenger was part of a pair.
+2. A newspaper photograph of the bus arriving at the second stop shows a passenger alighting. Use simulation to find the approximate probability that this passenger was part of a pair. Extra Credit: Do this problem mathematically.
 \end{statement}
 
 % This is how you call the proof environment
 \subsection*{Solution}
+\textbf{Part 1 }\\
 \textbf{Definitions}\\
 Let L$_i$ denote the number of passengers on the bus as it leaves the $i^{th}$ stop, i = 1,2,3......\\
 Let $B_i$ denote the number of individual new passengers who board the bus at the $i^{th}$ stop.\\
 Let $R_i$ denote the number of paired new passengers who board the bus at the $i^{th}$ stop.\\\\
 \textbf{Assumptions}\\
-The pairs who board together, also leave together.
+The pairs who board together, also leave together.\\
+Passengers who board at a stop do not get off at the same stop.\\
 \begin{align}
 P(L_2=0) & = P(B_1=0\ and\ R_1=0\ and\ L_2= 0)\ +  P(B_1=0\ and\ R_1=2\ and\ L_2= 0)\  \nonumber \\
   & \qquad + P(B_1=1\ and\ R_1=0\ and\ L_2= 0)\ + P(B_1=1\ and\ R_1=2\ and\ L_2= 0)\  \nonumber \\
@@ -123,21 +125,131 @@ Summing up these values we get
     & = 0.060736 \nonumber
 \end{align}
 \textbf{Part 2}\\
-Since we assume that people in pairs get off together, if we see only one person get off they cannot be part of the pair. Therefore, the probability that the person was part of a pair is 0.
+\textbf{Assumptions}\\
+1. If both, the individual passenger and the pair gets down, the pair gets down first.\\
+2. The photograph was taken of the first person getting down.\\\\
+\textbf{Definitions}\\
+Let X$_i$ be the number of pairs getting down at stop i.\\
+Let B$_i$ be the number of pairs getting on the bus at stop i.
+\begin{align}
+P(X_2=1) & = P(B_1=0\ and\ X_2=1)\ +  P(B_1=1\ and\ X_2=1)\  \nonumber \\
+ & = 0.4*0 + 0.6*0.2 \nonumber \\
+ & = 0.12 \nonumber
+\end{align}
+
 \newpage
 %------------%
 \begin{statement}{Problem B}
-Consider a communications line in which bits are 1 or 0, independently with probability p each. At any given bit, the line will fail, independently with probability q. Once the line has failed, it stays failed until it is repaired, reporting each bit as 0 regardless of the bit's true value. Of course, a long string of 0s should make us suspicious and cause us to inspect the line. Let Bi denote the actual value of the ith bit, and Ri the reported value, i = 1,2,3,...
+Consider a communications line in which the true bits are 1 or 0, independently with probability of a 1 being p each. At any given bit, the line will fail, independently with probability q. Once the line has failed, it stays failed until it is repaired, reporting each bit as 0 regardless of the bit's true value. Of course, a long string of 0s should make us suspicious and cause us to inspect the line. Let Bi denote the actual value of the ith bit , and Ri the reported value, i = 1,2,3,...
 
-Your answers to Parts 1 and 2 must be in closed form, i.e. no Σ and the like; use Properties of Geometric Series, pp.73-74.
+Your answers to Parts 1 and 2 must be in closed form, i.e. no Σ and the like; you may need to use Properties of Geometric Series, pp.73-74. Part 4 also has a closed-form answer.
 
-Find P(Bi = Ri) for i = 1,2,3,...
-Say you have software monitoring the line, which will flag a possible problem whenever it observes k consecutive 0s (i.e. a 1 followed by k 0s, the last of which is the most recent bit). Find the probability that a flag is raised at bit r.
-Write a function with call form
+1. Find P(Bi = Ri) for i = 1,2,3,...\\
+
+2. Say you have software monitoring the line, which will flag a possible problem whenever it observes k consecutive 0s after a 1 (i.e. a 1 followed by k 0s, the last of which is the most recent bit). Find the probability that a flag is raised at bit r, r = k+1,k+2,k+3,... This is a single expression in p, q , k and r.\\
+
+3. Write a function with call form
 simline(nreps,p,q,k,r)
-that finds via simulation the probability that a flag is raised at bit r but not before that time
+that finds via simulation the probability that a flag is raised at bit r but not before that time.\\
+
+4. The $B_i$ are independent, but intuitively, the $R_i$ are not. Show that to be the case by calculating P($R_1$ = 0 and $R_2$ = 0), P($R_1$ = 0) and P($R_2$ = 0), and noting that the product of the latter two probabilities is not equal to the first one.\\
+Your answer must be consist of general expressions in p and q. With those equal to 0.6 and 0.2, respectively, one gets the answers 0.36640 and 0.32032.
 
 \end{statement}
+\subsection*{Solution}
+\textbf{Part 3}\\
+Code: Code1.R\\
+NOTE: numbering starts from 1, i.e., the first bit is bit 1 and not bit 0.\\\\
+\textbf{Part 4 }\\
+\textbf{Subsection 1: $P(R_1 = 0\ and\ R_2 = 0)$ }\\
+\textbf{Definitions}\\
+Let $Z_i$ be false if the line failed for bit i and true if it didn't fail.\\
+Let $B_i$ denote the actual value of the ith bit \\
+Let  $R_i$ the reported value, i = 1,2,3,...
+\begin{align}
+P(R_1 = 0\ and\ R_2 = 0)  & = P(R_2 = 0\ and\ Z_1 = False\ or R_2 = 0\ and\ Z_1 = True \nonumber \\
+ & \qquad and  B_1 = 0\ and\ R_1 = 0)\ \nonumber \\
+ & = P(R_2 = 0\ and\ Z_1 = False) + P(R_2 = 0\ and\ Z_1 = True\ \nonumber \\
+ & \qquad and\  B_1 = 0\ and\ R_1 = 0)\ \nonumber \\
+ & \qquad [using\ P(A or B) = P(A) + P(B)]\ \nonumber
+\end{align}
+
+Solving $ P(R_2 = 0\ and\ Z_1 = False)$
+\begin{align}
+P(R_2 = 0\ and\ Z_1 = False)  & = P(Z_1 = False) * P(R_2 = 0 | Z = False) \nonumber \\
+& [using\ P(A and B) = P(A) * P(B|A)]\ \nonumber \\
+& = q * 1 \nonumber
+\end{align}
+
+Solving $P(R_2 = 0\ and\ Z_1 = True\ and\  B_1 = 0\ and\ R_1 = 0) $ \\
+\begin{align}
+P(R_2 = 0\ and\ Z_1 = True\ and\  B_1 = 0\ and\ R_1 = 0)  & = P(Z_1 = True\ and\  B_1 = 0 and\ R_1 = 0) * \nonumber \\
+& \qquad P( R_2 = 0| Z_1 = True\ and\  B_1 = 0\ and\ R_1 = 0) \nonumber \\
+& \qquad[using\ P(A and B) = P(A) * P(B|A)] \nonumber
+\end{align}
+Lets solve the first sub-part of this equation\\
+\begin{align}
+P(Z_1 = True\ and\  B_1 = 0 and\ R_1 = 0) & = P(B_1 = 0) * P(R_1 = 0\ and\ Z_1 = True | B_1 = 0 ) \nonumber \\
+& \qquad [Using\ P(A and B) = P(A) * P(B|A) ] \nonumber \\
+& = (1-p) * (1-q) \nonumber
+\end{align}
+Lets solve the second sub-part of this equation\\
+$P( R_2 = 0| Z_1 = True\ and\  B_1 = 0\ and\ R_1 = 0)$ is the same as $P(R_1 = 0)$ that is solved for in the next part for $P(R_1 = 0)$. It comes out to be $(1-p)*1 + p*q$.\\
+\textbf{Final answer}\\
+$P(R_1 and R_2) = q*1+  ((1-p)*(1-q)*(1-p+p*q)) $
+For p = 0.6 and q = 0.2 we get 0.3664.\\\\
+\textbf{Subsection 2: $P(R_1 = 0) * P( R_2 = 0)$ }\\
+\textbf{Definitions}\\
+Let $Z_i$ be false if the line failed for bit i and true if it didn't fail.\\
+Let $B_i$ denote the actual value of the ith bit \\
+Let  $R_i$ the reported value, i = 1,2,3,...\\\\
+Lets solve each one of the parts of this equation.
+\begin{align}
+P(R_1 = 0) & = P(B_1 = 0\ and R_1 = 0\ or\ B_1 = 1\ and\ R_1 = 0)\ \nonumber\\
+& = P(B_1 = 0\ and R_1 = 0) + P(B_1 = 1\ and R_1 = 0) \nonumber \\
+& \qquad [Using P(A or B) = P(A) + P(B)] \nonumber \\
+& = P(B_1 = 0)*P(R_1 = 0 | B_1 = 0) + P(B_1) * P(R_1 = 0 |B_1 = 1 ) \nonumber \\
+& \qquad [Using P(A and B) = P(A) * P(B|A)] \nonumber \\
+& = (1-p)*1 + p*q \nonumber
+\end{align}
+\begin{align}
+P(R_2 = 0) & = P(R_2 = 0\ and\ B_2 = 0\ and\ Z_1 = False\ or\ R_2 = 0\ and\ B_2 = 0\  and\ \nonumber \\
+& \qquad Z_1 = True\ or\ R_2 = 0\ and\ B_2 = 1\ and\ Z_1 = False\ or R_2 = 0\ and\ \nonumber \\ 
+& \qquad B_2 = 1\ and\ Z_1 = True\ )  \nonumber \\
+& = P(R_2 = 0\ and\ B_2 = 0\ and\ Z_1 = False) +  P(R_2 = 0\ and\ B_2 = 0\ \nonumber \\
+& \qquad and\ Z_1 = True) +  P(R_2 = 0\ and\ B_2 = 1\ and\ Z_1 = False) +  \nonumber \\
+& \qquad P(R_2 = 0\ and\ B_2 = 1\ and\ Z_1 = True) \nonumber \\
+& \qquad [Using P(A or B) = P(A) + P(B)] \nonumber
+\end{align}
+Lets solve each of these. We use P(A and B) = P(A) * P(B|A) for each one of them.\\
+\begin{align}
+P(R_2 = 0\ and\ B_2 = 0\ and\ Z_1 = False) & = P(B_2 = 0\ and\ Z_1 = False) * P(R_2 = 0 | B_2 = 0 \nonumber \\
+&  \qquad and Z_1 = False \nonumber) \\
+& = (1-p) * (1-q) \nonumber
+\end{align}
+\begin{align}
+P(R_2 = 0\ and\ B_2 = 0\ and\ Z_1 = True) & = P(B_2 = 0\ and\ Z_1 = True) * P(R_2 = 0 | B_2 = 0 \nonumber \\
+&  \qquad and Z_1 = True \nonumber) \\
+& = (1-p)*q*1 \nonumber
+\end{align}
+\begin{align}
+P(R_2 = 0\ and\ B_2 = 1\ and\ Z_1 = False) & = P(B_2 = 1\ and\ Z_1 = False) * P(R_2 = 0 | B_2 = 1 \nonumber \\
+&  \qquad and Z_1 = False \nonumber) \\
+& = p*(1-q)*q \nonumber
+\end{align}
+\begin{align}
+P(R_2 = 0\ and\ B_2 = 1\ and\ Z_1 = True) & = P(B_2 = 1\ and\ Z_1 = True) * P(R_2 = 0 | B_2 = 1 \nonumber \\
+&  \qquad and Z_1 = True \nonumber) \\
+& = p*q*1 \nonumber
+\end{align}
+Therefore,
+\begin{align}
+P(R_2 = 0) = (1-p) * (1-q) + (1-p)*q*1 + p*(1-q)*q + p*q*1 \nonumber
+\end{align}
+Substituting p = 0.6 and q = 0.2, we get the following:\\
+$P(R_1 = 0)$ = (1-p) + p*q = 0.52\\
+$P(R_2 = 0)$ = (1-p) * (1-q) + (1-p)*q*1 + p*(1-q)*q + p*q*1 = 0.616\\
+$P(R_1 = 0)*P(R_2 = 0)$ = 0.52 * 0.616 =  0.32032
 \newpage
 %------------%
 \begin{statement}{Problem C}
@@ -151,8 +263,7 @@ simplate(nreps,p)
 that finds by simulation the probability that the smaller piece has area less than p.
 \end{statement}
 \subsection*{Solution}
-
- 
+Code: Code1.R
 
 
 
@@ -162,26 +273,3 @@ that finds by simulation the probability that the smaller piece has area less th
 
 \end{document}
 %--------------%
-P(L$_2$=0) = P(B$_1$ = 0 and R$_1$=0  and  L$_2$ = 0  or B$_1$ = 0 and R$_1$=2  and  L$_2$ = 0  or\\
-            &   B$_1$ = 1 and R$_1$=0  and  L$_2$ = 0 or 
-We would like to prove that $ \sum_{k=1}^n k = \frac{n(n+1}{2}$ so we proceed by induction. \\
-
-\textbf{Base Case}. For $n = 1$ we see that the left hand side of (\ref{bree}) is 1 whereas the right hand side is given by 
-$$ \frac{1(1+1)}{2}= 1. $$
-as well. Hence the statement is true for $n =1$ \\
-
-\textbf{Induction Case}. Assume that the statement holds for n+1, that is we need to show that
-\begin{align*}
- 1 + 2 + 3 + \dotsc + n + (n+1) &= \frac{(n+1)((n+1)+1)}{2} \\
- & = \frac{(n+1)(n+2)}{2}
-\end{align*}
-Thus we will begin with the left hand side of (\ref{bree}) to reach our conclusion. By our assumption we know that 
-$$ 1 + 2 + 3 + \dotsc + n + (n+1) = \frac{n(n+1)}{2} + (n+1)
-$$
-Thus we use a bit of algebra as follows to reach our conclusion: 
-\begin{align*}
-    1 + 2 + 3 + \dotsc + n+ (n+1) & = \frac{n(n+1)}{2}+ (n+1) \\ 
-    & = \frac{n(n+1)}{2} + \frac{2(n+1)}{2} \\
-    & = \frac{(n+1)(n+2)}{2}.
-\end{align*}
-Thus by induction we see that statement (\ref{bree}) is true.
