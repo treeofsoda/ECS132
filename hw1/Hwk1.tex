@@ -126,17 +126,79 @@ Summing up these values we get
 \end{align}
 \textbf{Part 2}\\
 \textbf{Assumptions}\\
-1. If both, the individual passenger and the pair gets down, the pair gets down first.\\
-2. The photograph was taken of the first person getting down.\\\\
+1. If the pair does get down, then the photo of the pair is taken.\\\\
 \textbf{Definitions}\\
 Let X$_i$ be the number of pairs getting down at stop i.\\
-Let B$_i$ be the number of pairs getting on the bus at stop i.
+Let B$_i$ be the number of pairs getting on the bus at stop i.\\
+Let I$_i$ be the number of individuals getting down at stop i.\\
+Let G$_i$ be the number of individuals getting on at stop i.\\
+Let Y$_i$ be 1 if someone gets down at stop i, 0 otherwise.\\
+Let M$_i$ be 1 if a pair gets down at stop i, 0 otherwise.\\
 \begin{align}
-P(X_2=1) & = P(B_1=0\ and\ X_2=1)\ +  P(B_1=1\ and\ X_2=1)\  \nonumber \\
- & = 0.4*0 + 0.6*0.2 \nonumber \\
- & = 0.12 \nonumber
+P(M_2=1 | Y_2 = 1) & = \frac{P(M_2 = 1 and Y_2 = 1)}{P(Y_2 = 1)}  \nonumber \\
+& \qquad [Using P(A|B) = \frac{P(A and B)}{P(B)}] \nonumber
+\end{align}
+Lets solve each of the these.\\
+Solving for the numerator, we get:
+\begin{align}
+P(X_2 = 1 and Y_2 = 1) & = P(B_1 = 1 and X_2 = 1) \nonumber \\
+& = 0.6 * 0.2 \nonumber \\
+& = 0.12 \nonumber
 \end{align}
 
+Solving for the denominator, we get:
+\begin{align}
+P(Y_2 = 1) & = P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 1\ or\ Y_2 = 1\ and\ B_1 = 0\ and\ G_1 = 1 \nonumber \\
+& \qquad or\ Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 0\ or\ Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 2 \nonumber \\
+& \qquad or\ Y_2 = 1\ and\ B_1 = 0\ and\ G_1 = 2\ ) \nonumber \\
+& = P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 1) + P(Y_2 = 1\ and\ B_1 = 0\ and\ G_1 = 1) \nonumber \\
+& \qquad + P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 0) + P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 2)  \nonumber \\
+& \qquad + P(Y_2 = 1\ and\ B_1 = 0\ and\ G_1 = 2) \nonumber \\
+& \qquad [Using\ P(A or B) = P(A) + P(B)] \nonumber
+\end{align}
+Lets solve each one of these 
+\begin{align}
+P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 1) & = P(B_1 = 1\ and\ G_1 = 1) * P(Y_2 = 1 | B_1 = 1\ and\ G_1 = 1) \nonumber\\
+& = 0.6 * 0.4 * P( X_2 = 1\ and\ I_2 = 1\ or \nonumber \\
+& \qquad X_2 = 1 and I_2 = 0 or X_2 = 0 and I_2 = 1) \nonumber \\
+& = 0.6 * 0.4 * (0.2^2 + 0.2*0.8 + 0.2*0.8) \nonumber \\
+& = 0.0864 \nonumber
+\end{align}
+
+\begin{align}
+P(Y_2 = 1\ and\ B_1 = 0\ and\ G_1 = 1) & = P(B_1 = 0\ and\ G_1 = 1) * P(Y_2 = 1 | B_1 = 0\ and\ G_1 = 1) \nonumber \\
+& = 0.4 * 0.4 * 0.2 \nonumber\\
+& = 0.032 \nonumber
+\end{align} 
+
+\begin{align}
+P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 0) & = P(B_1 = 1\ and\ G_1 = 0) * P(Y_2 = 1 | B_1 = 1\ and\ G_1 = 0) \nonumber \\
+& = 0.6 * 0.5 * P(X_2 = 1) \nonumber \\
+& = 0.6 * 0.5 * 0.2 \nonumber\\
+& = 0.06 \nonumber
+\end{align}
+
+\begin{align}
+P(Y_2 = 1\ and\ B_1 = 1\ and\ G_1 = 2) & = P(B_1 = 1\ and\ G_1 = 2) * P(Y_2 = 1 | B_1 = 1\ and\ G_1 = 2) \nonumber \\
+& = 0.6 * 0.1 * P(X_2 = 1\ and\ I_2 = 1 or X_2 = 1\ and \ I_2 = 2 \nonumber \\
+& \qquad or\ X_2 = 0\ and\ I_2 = 1 or X_2 = 0\ and \ I_2 = 2 or X_2 = 1\ and I_2 =0) \nonumber \\
+& = 0.6 * 0.1 * (0.2^2 + 0.2^3 + 0.2 + 0.2^2 + 0.2) \nonumber\\
+& = 0.02928 \nonumber
+\end{align}
+
+\begin{align}
+P(Y_2 = 1\ and\ B_1 = 0\ and\ G_1 = 2) & = P(B_1 = 0\ and\ G_1 = 2) * P(Y_2 = 1 | B_1 = 0\ and\ G_1 = 2) \nonumber \\
+& = 0.4 * 0.1 * P(X_1 = 1 or X_1 = 1 or X_1 = 2 ) \nonumber \\
+& = 0.4 * 0.1 *(0.2 + 0.2 + 0.2^2) \nonumber \\
+& = 0.0176 \nonumber
+\end{align}
+Summing up everything,
+\begin{align}
+P(Y_2 = 1) & = 0.0864 + 0.032 + 0.06 + 0.02928 + 0.0176 \nonumber \\
+& = 0.22528 \nonumber
+\end{align}
+Final Answer = $\frac{0.12}{0.22528}$\\
+ = 0.5326705
 \newpage
 %------------%
 \begin{statement}{Problem B}

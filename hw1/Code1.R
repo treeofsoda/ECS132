@@ -4,27 +4,45 @@ leave_single <-function(){
   leave_two: Function that use simulation to determine if the passenger alighting at stop 2 belonges to a pair.
   "
   ## define the 3 points that will be used to check how many individuals board the bus
-  #P_INDIVIDUAL_NONE = 0.5
-  #P_INDIVIDUAL_SINGLE = 0.9
-  #P_INDIVIDUAL_DOUBLE = 1
+  P_INDIVIDUAL_NONE = 0.5
+  P_INDIVIDUAL_SINGLE = 0.9
+  P_INDIVIDUAL_DOUBLE = 1
   P_ALIGHT = 0.2
   #passengers count as individuals and pairs
   count_pair = 0
-  
+  count_individual = 0
   ## define the 3 points that will be used to check how many pairs board the bus
   P_PAIR_NONE = 0.4
   P_PAIR_SINGLE = 1
   
   #Simulate the boarding process at Stop 1
-  #p_individual_b1 = runif(1)
+  p_individual_b1 = runif(1)
   p_pair_b1 = runif(1)
-  if (p_pair_b1>=0.4){count_pair = count_pair + 1}
-  else{return (FALSE)}
+  if (p_pair_b1>= P_PAIR_NONE){count_pair = count_pair + 1}
+  if (p_individual_b1 >= P_INDIVIDUAL_NONE & p_individual_b1 < P_INDIVIDUAL_SINGLE ){count_individual = count_individual + 1}
+  else if (p_individual_b1 >= P_INDIVIDUAL_SINGLE & p_individual_b1 < P_INDIVIDUAL_DOUBLE ){count_individual = count_individual + 2}
   
   #Simulate departure process at stop 2
+  someones_out = FALSE
+  pairs_out = FALSE
   p_pair_l2 = runif(1)
-  if (p_pair_l2< 0.2){return (TRUE)}
-  else{return (FALSE)}
+  p_single_l2 = runif(1)
+  p2_single_l2 = runif(1)
+  if (count_individual == 1 & p_single_l2 < P_ALIGHT){
+    someones_out = TRUE
+  }
+  if (count_individual == 2 & (p_single_l2 < P_ALIGHT | p2_single_l2 < P_ALIGHT)){
+    someones_out = TRUE
+  }
+  if (count_pair == 1){
+    if (p_pair_l2 < P_ALIGHT){
+      pairs_out = TRUE
+      someones_out = TRUE
+    }
+  }
+  out <- c(someones_out, pairs_out)
+  names(out) <- c("SomeOut", "PairOut")
+  return (out)
 }
 
 leave_simulate <-function(nreps){
@@ -36,7 +54,10 @@ leave_simulate <-function(nreps){
         
         returns: probability that a passenger alighting at stop 2 belonges to a pair 
   '
-  prob = mean(replicate(nreps,leave_single()))
+  prob = replicate(nreps,leave_single())
+  myFilter = prob[1,] == TRUE
+  prob = prob[2,][myFilter]
+  prob = mean(prob)
   return(prob)
 }
 
