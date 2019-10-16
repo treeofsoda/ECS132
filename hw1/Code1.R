@@ -40,9 +40,92 @@ leave_simulate <-function(nreps){
   return(prob)
 }
 
+################# PROBLEM B ##########################################
 
+simline <- function(nreps, p, q, k, r){
+  '
+  simline: Function that runs the simulation as described by the problem and checks if the flag is raised at bit R.
+  params : 
+         nreps: number of repitions of the simulation
+         p    : Probability that the actual bit sent is 1
+         q    : Probability that the line will fail
+         k    : length of consecutive 0s after which the flag is reported
+         r    : The bit AT which to check if the flag is raised
+  '
+  
+  prob = mean(replicate(nreps,single_simline(p,q,k,r)))
+  return(prob)
+}
 
+single_simline <- function(p, q, k, r){
+  '
+  single_simulate: Function that finds the probability that a flag is raised at bit r, r = k+1, k+2, k+,... . 
+  params:
+        p    : Probability that the actual bit sent is 1
+        q    : Probability that the line will fail
+        k    : length of consecutive 0s after which the flag is reported
+        r    : The bit AT which to check if the flag is raised
+  '
+  previous_error = FALSE  
+  len = 0 #Length up until now
+  flag = FALSE
+  start_count = FALSE ## Start counting once you see 1 
+  k_count = 0
+  
+  while(flag == FALSE &  len <= r+4){
+    input = generate_actual_input(p)  #Generate input
+    output = generate_line_output(q, input, previous_error) #Generate output
+    len = len + 1
+    previous_error = output[2] #Assign prev_error
+    
+    ## If output is 1 then 
+    if (output[1] == 1){
+      start_count = TRUE
+      k_count = 0
+    }
+    
+    # start counting number of 0's if start count has been sent
+    if (start_count == TRUE & output[1] == 0  ){
+      k_count = k_count + 1;
+    }
+    
+    if(k_count == k ){
+      if (len == r){return(TRUE)}
+      flag = TRUE
+    }
+  }
+  return (FALSE)
+}
 
+generate_actual_input <- function(p){
+  '
+  generate_actual_input: Function that returns value 1, if the random number is less than p else returns 0
+  
+  params:
+        p    : Probability of getting a 1
+  '
+  if (runif(1)< p){return (1)}
+  else{return (0)}
+}
+
+generate_line_output <- function(q, input, prev_error){
+  '
+  generate_line_output: Function that simulates the behavior of the line.
+  
+  params:
+        q         : Probability of line failing
+        input     : The input given by user
+        prev_error: Boolean indicating if error was previously reported.
+  '
+  
+  if (prev_error == TRUE){
+    return (c(0, TRUE))
+  }
+  else{
+    if (runif(1) < q){return (c(0,TRUE))}
+    else {return (c(input, FALSE))}
+  }
+}
 
 
 
