@@ -219,6 +219,28 @@ Your answer must be consist of general expressions in p and q. With those equal 
 
 \end{statement}
 \subsection*{Solution}
+\textbf{Part 1}\\
+\textbf{Definitions}\\
+1. Let $Z_i$ be True if line didn't fail at bit i.
+\begin{align}
+P(B_i = R_i) & = P(B_i = 0\ and\ R_i = 0\ or\ B_i = 1\ and\ R_i = 1) \nonumber \\
+& = P(B_i = 0\ and\ R_i = 0) + P(B_i = 1\ and\ R_i = 1) \nonumber 
+\end{align}
+Solving each one of them we get \\
+\begin{align}
+P(B_i = 1\ and\ R_i = 1)&  = P(B_i = 1) * P(R_i = 1 | B_i = 1) \nonumber \\
+& = p * (1-q)^i \nonumber
+\end{align}
+\begin{align}
+P(B_i = 0\ and\ R_i = 0)&  = P(B_i = 0\ and\ R_i = 0\ and\ Z_i = True) + P(B_i = 0\ and\ R_i = 0\ and\ Z_i = False)   \nonumber \\
+& = P(B_i = 0) * P(R_i = 0\ and \ Z_i = True | B_i = 0) + P(B_i = 0) * \nonumber \\
+& \qquad (R_i = 0\ and \ Z_i = False | B_i = 0) \nonumber \\
+& = (1-p)*(1-q)^i + (1-p)*q^i \nonumber
+\end{align}
+Therefore, \\
+$P(B_i = R_i) = (1-p)*(1-q)^i + (1-p)*q^i +  p * (1-q)^i $  \\ 
+\textbf{Part 2}\\
+Unsolved\\
 \textbf{Part 3}\\
 Code: Code1.R\\
 NOTE: numbering starts from 1, i.e., the first bit is bit 1 and not bit 0.\\\\
