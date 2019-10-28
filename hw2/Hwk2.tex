@@ -57,7 +57,7 @@
 \begin{document}
 
 \noindent
-\textbf{ECS132} \hfill \textbf{Atharva Chalke} \\
+\textbf{ECS132} \hfill \textbf{Atharva Chalke, Sam Yuan} \\
 \normalsize Prof. Matloff \hfill Due Date: 10/14/19 \\
 
 
@@ -142,6 +142,48 @@ In the setting of Problem B, Homework I, let Wk be the number of reported 0 bits
 
 `
 
+\newpage
+\begin{statement}{Problem D}
+    This problem involves Chebychev's Inequality, Equation (3.63). (You are not responsible for this material on quizzes, but it will be used here.)\\
+
+    Evaluate both sides of (3.63) for the following case: X has a binomial distribution with 10 trials and success probability 0.25, and c=2. Verify that the inequality does hold in this case.
+\end{statement}
+
+% This is how you call the proof environment
+\subsection{Solution}
+Given Chebychev's Inequality, p = 0.25, c = 2\\\\
+For variance:
+\begin{equation}
+    \begin{aligned}
+        V_{ar}(X)&=np(1-p)\\
+        &=10*0.25*(1-0.25)\\
+        &=1.875
+    \end{aligned}
+\end{equation}
+For mean:
+\begin{equation}
+    \begin{aligned}
+        \mu&=np\\
+        &=10*0.25=2.5
+    \end{aligned}
+\end{equation}
+For c = 2:
+\begin{equation}
+    \dfrac{1}{c^2}=\dfrac{1}{4}
+\end{equation}
+Therefore:
+\begin{equation}
+    \begin{aligned}
+        P(|X-\mu|\geq cV_{ar})&=P(|X-2.5|\geq 2*1.875)\\
+        &=P(|X-2.5|\geq 3.75)\\
+        &=\sum\limits_{i=7}^{10}P(X=i)\\
+        &=\sum\limits_{i=7}^{10}\binom{n}{k}p^k(1-p)^{n-k}\\
+        &=\binom{10}{7}0.25^7(1-0.25)^{10-7}+\binom{10}{8}0.25^8(1-0.25)^{10-8}\\
+        &\ \ \ \ \ \ +\binom{10}{9}0.25^9(1-0.25)^{10-9}+\binom{10}{10}0.25^{10}(1-0.25)^{10-10}\\
+        &=0.0035\leq\dfrac{1}{4}
+    \end{aligned}
+\end{equation}
+Hence, Chebychev's inequality does hold in this case.
 
 \end{document}
 %--------------%
