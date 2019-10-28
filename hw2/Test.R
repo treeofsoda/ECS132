@@ -5,9 +5,12 @@ single_sim <- function(p,q,k){
   i = 0
   failed = FALSE
   while(i < k){
-    probs = 
-    p_prob = runif(1)
-    q_prob = runif(1)
+    #cat("failed is:", failed, "\n")
+    #cat("i is:", i, "\n")
+    #cat("zero count is:", zero_count, "\n")
+    prob = runif(2)
+    p_prob = prob[1]
+    q_prob = prob[2]
     if(failed == TRUE){zero_count = zero_count + 1}
     else{
       if (q_prob<q){
