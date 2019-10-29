@@ -23,6 +23,7 @@
 \usepackage{mathpazo} % Modifies font. Optional package.
 \usepackage{mdframed} % Required for boxed problems.
 \usepackage{parskip} % Left justifies new paragraphs.
+\usepackage{cancel}  % Used in Problem B.
 \linespread{1.1} 
 
 
@@ -57,7 +58,7 @@
 \begin{document}
 
 \noindent
-\textbf{ECS132} \hfill \textbf{Atharva Chalke, Sam Yuan} \\
+\textbf{ECS132} \hfill \textbf{Atharva Chalke, Sam Yuan, Travis Li} \\
 \normalsize Prof. Matloff \hfill Due Date: 10/14/19 \\
 
 
@@ -89,11 +90,11 @@ Let Support of M be D, Thus D = $\{1,2,4\}$
 E(M) & = \sum_{d \in D} d * P(M = d) \nonumber 
 \end{align}
 \begin{align}
-P(D = 4) & = P(A_2 = 0 and A_3 = 0 and A_4 = 0) \nonumber \\
+P(D = 4) & = P(A_2 = 0\ and\ A_3 = 0\ and\ A_4 = 0) \nonumber \\
  & = (1-p)^3 \nonumber 
 \end{align}
 \begin{align}
-P(D = 2) & = P(A_2 = 0 and A_3 =1 and A_4 = 0) \nonumber \\
+P(D = 2) & = P(A_2 = 0\ and\ A_3 =1\ and\ A_4 = 0) \nonumber \\
  & = p*(1-p)^2 \nonumber 
 \end{align}
 Every other combination of the 3 spaces in between results in a distance of 1. To find the probability we find the probability for each case and sum them up.\\\\
@@ -136,7 +137,60 @@ Code2.R
 In the setting of Problem B, Homework I, let Wk be the number of reported 0 bits among the first k bits. Using indicator functions as in Equations (3.98) and following (this is required), find EWk in terms of k, p and q.
 \end{statement}
 
+For this question, I divide all the circumstances by the position of bit where the line first fails. 
 
+Let F be the position of the first fail bit. If the line doesn't fail in the first k bits, say F > k.
+\begin{equation}
+\begin{split}
+EW_k & = E(W_k\ and\ F=1 + W_k\ and\ F=2 + ... + W_k\ and\ F=k + W_k\ and\ F>k) \\
+     & = E(W_k\ and\ F=1)+ E(W_k\ and\ F=2) + ... + E(W_k\ and\ F=k) \\
+     & = P(F=1)E(W_k|F=1) + P(F=2)E(W_k|F=2) + ... + P(F=k)E(W_k|F=k) + P(F>k)E(W_k|F>k) \\
+     & = \sum_{i=1}^kP(F=i)E(W_k|F=i) + P(F>k)E(W_k|F>k) 
+\end{split}
+\end{equation}
+
+The line first fails at the i$^{th}$ bit means that the line remains not fail in the first (i-1) bits. So 
+
+\begin{equation}
+P(F=i) = q(1-q)^{i-1}
+\end{equation}
+
+Also,
+
+\begin{equation}
+P(F>k) = (1-q)^{k}
+\end{equation}
+
+Before (and excluding) the i$^{th}$ bit, there are (i-1) bits where we have to count in probability of not outputting 1 since the line has not failed. After (and including) the i$^{th}$ bit, there are (k-i+1) bits which are all 0s since the line has failed. Therefore,
+
+
+\begin{equation}
+\begin{split}
+E(W_k|F=i) & = (1-p)(i-1)+(k-i+1) \\
+           & = i-1+k-i+1-p(i-1) \\
+           & = k-p(i-1)
+\end{split}
+\end{equation}
+
+Also, 
+\begin{equation}
+E(W_k|F>k) = k(1-p)
+\end{equation}
+
+Back to calculation of EW$_k$:
+
+\begin{equation}
+\begin{split}
+EW_k & = \sum_{i=1}^kP(F=i)E(W_k|F=i) + P(F>k)E(W_k|F>k) \\
+     & = \sum_{i=1}^kq(1-q)^{i-1}(k-p(i-1)) + (1-q)^{k}k(1-p) \\
+     & = \sum_{i=1}^kq(1-q)^{i-1}k-\sum_{i=1}^kq(1-q)^{i-1}p(i-1) + k(1-p)(1-q)^{k} \\
+     & = qk\sum_{i=1}^k(1-q)^{i-1}-pq\sum_{i=1}^k(i-1)(1-q)^{i-1} + k(1-p)(1-q)^{k} \\
+     & = qk\frac{1-(1-q)^k}{1-(1-q)}-pq(\frac{(1-q)-(1-q)^k}{q^2}-\frac{(k-1)(1-q)^k}{q})+k(1-q)^k-pk(1-q)^k \\
+     & = k(1-(1-q)^k) - \frac{p}{q}((1-q)-(1-q)^k)+p(k-1)(1-q)^k + k(1-q)^k - pk(1-q)^k \\
+     & = k - \cancel{k(1-q)^k}  - \frac{p}{q}(1-q) + \frac{p}{q}(1-q)^k + \cancel{pk(1-q)^k} - p(1-q)^k + \cancel{k(1-q)^k}- \cancel{pk(1-q)^k} \\ 
+     & = k - \frac{p}{q}(1-q) + (\frac{p}{q}-p)(1-q)^k
+\end{split}
+\end{equation}
 
 
 
