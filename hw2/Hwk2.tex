@@ -59,7 +59,7 @@
 
 \noindent
 \textbf{ECS132} \hfill \textbf{Atharva Chalke, Sam Yuan, Travis Li} \\
-\normalsize Prof. Matloff \hfill Due Date: 10/14/19 \\
+\normalsize Prof. Matloff \hfill Due Date: 10/29/19 \\
 
 
 \begin{center}
@@ -191,8 +191,20 @@ EW_k & = \sum_{i=1}^kP(F=i)E(W_k|F=i) + P(F>k)E(W_k|F>k) \\
      & = k - \frac{p}{q}(1-q) + (\frac{p}{q}-p)(1-q)^k
 \end{split}
 \end{equation}
+\newpage
+\begin{statement}{Problem C}
+Consider some undirected, connected graph. (Starting at any vertex, we can reach any other via a finite sequence of hops.) What happens when we remove some edge? The graph may or may not still be connected. If not, it will have 2 connected components.
 
+Write a function with call form
 
+simConn(nreps,adjMat)\\
+that uses simulation to find the distribution of N, the number of connected components remaining after a random edge is deleted. The return value will be a vector of length 2.    
+\end{statement}
+\subsection*{Solution}
+Code: Code2.R\\
+Note:\\
+1. The csv file should contain the matrix separated by \textbf{commas}. \\
+2. In the vector returned, the first value is the probability of it staying connected while the second value is the probability that it doesn't stay connected.\\
 
 `
 
@@ -204,7 +216,7 @@ EW_k & = \sum_{i=1}^kP(F=i)E(W_k|F=i) + P(F>k)E(W_k|F>k) \\
 \end{statement}
 
 % This is how you call the proof environment
-\subsection{Solution}
+\subsection*{Solution}
 Given Chebychev's Inequality, p = 0.25, c = 2\\\\
 For variance:
 \begin{equation}
