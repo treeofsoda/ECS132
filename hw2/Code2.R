@@ -98,7 +98,7 @@ simConn <- function(nreps, adjMat){
   '
   if(class(adjMat) == 'matrix'){data = adjMat}
   else if(class(adjMat) == 'character'){
-    data = read.csv(adjMat, sep = ";", header = FALSE)
+    data = read.csv(adjMat, sep = ",", header = FALSE)
     data = as.matrix(data)
     rownames(data) = NULL
     colnames(data) = NULL
