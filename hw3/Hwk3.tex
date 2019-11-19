@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{geometry}
+%\usepackage[margin=1in]{geometry}
+\usepackage[onehalfspacing]{setspace}
+%\usepackage[doublespacing]{setspace}
+\usepackage{amsmath, amssymb, amsthm}
+\usepackage{enumerate, enumitem}
+\usepackage{fancyhdr, graphicx, proof, comment, multicol}
+\usepackage[none]{hyphenat} % This command prevents hyphenation of words
+
+%    Good website with common symbols
+% http://www.artofproblemsolving.com/wiki/index.php/LaTeX%3ASymbols
+%    How to change enumeration using enumitem package
+% http://tex.stackexchange.com/questions/129951/enumerate-tag-using-the-alphabet-instead-of-numbers
+%    Quick post on headers
+% http://timmurphy.org/2010/08/07/headers-and-footers-in-latex-using-fancyhdr/
+%    Info on alignat
+% http://tex.stackexchange.com/questions/229799/align-words-next-to-the-numbering
+% http://tex.stackexchange.com/questions/43102/how-to-subtract-two-equations
+%    Text align left-center-right
+% http://tex.stackexchange.com/questions/55472/how-to-make-text-aligned-left-center-right-in-the-same-line
+\usepackage{microtype} % Modifies spacing between letters and words
+\usepackage{mathpazo} % Modifies font. Optional package.
+\usepackage{mdframed} % Required for boxed problems.
+\usepackage{parskip} % Left justifies new paragraphs.
+\usepackage{cancel}  % Used in Problem B.
+\linespread{1.1} 
+
+
+\newenvironment{problem}[1]
+{\begin{mdframed}[linewidth=0.6pt]
+        \textsc{Problem #1:}
+
+}
+    {\end{mdframed}}
+
+\newenvironment{solution}
+    {\textsc{Solution:}\\}
+    {\newpage}% puts a new page after the solution
+    
+\newenvironment{statement}[1]
+{\begin{mdframed}[linewidth=0.6pt]
+        \textsc{ #1:}
+
+}
+    {\end{mdframed}}
+
+%\newenvironment{prf}
+ %   {\textsc{Proof:}\\}
+ %   {\newpage}% puts a new page after the solution
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\C}{\mathbb{C}}
+\newcommand{\Z}{\mathbb{Z}}
+\newcommand{\N}{\mathbb{N}}
+\newcommand{\Q}{\mathbb{Q}}
+
+\begin{document}
+
+\noindent
+\textbf{ECS132} \hfill \textbf{Sam Yuan, Travis Li, Atharva Chalke, Rodrigo} \\
+\normalsize Prof. Matloff \hfill Due Date: 11/18/19 \\
+
+
+\begin{center}
+\textbf{Homework 3}
+\end{center}
+
+% This is how you call the environment for the statement to be proved.
+\begin{statement}{Problem B}
+  ......\\
+  These values will be returned in a vector. DO NOT HAVE THE FUNCTION PRINT THEM. (Do you know why?)
+\end{statement}
+
+% This is how you call the proof environment
+\subsection*{Solution}
+The reason why we do not need to print the values in the function is that we are already returning them as a vector at the end of the function.\\\\
+When checking the answer by typing print(mc(n,q,p,r)), it will show the solution in the terminal at the function call.\\\\
+Hence, there is no need to print the values inside the function.
+
+\end{document}
+%--------------%
