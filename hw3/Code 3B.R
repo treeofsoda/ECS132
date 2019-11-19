@@ -1,5 +1,14 @@
 ############################## PROBLEM B  ##############################
 
+findpi1 <- function(p) {    # This funcion is copied from textbook Pg.108
+  n <- nrow(p)
+  imp <- diag(n) - t(p)
+  imp[n, ] <- rep(1, n)
+  rhs <- c(rep(0,n-1),1)
+  solve(imp,rhs)
+}
+
+
 mc <- function(n, q, p, r) {
   tm <- matrix(rep(0, (n+q+1)^2), nrow=n+q+1)
                                           # Create (n+q+1)^2 square matrix. n is dominent. 
@@ -59,5 +68,38 @@ mc <- function(n, q, p, r) {
       }
     }
   }
-  tm
+  print(tm)
+  pi_list <- findpi1(tm)
+  print(pi_list)
+  
+  # Now deduce the asked vector
+  a_1 <- 0
+  for (i in 1:(n+q+1)) {
+    a_1 <- a_1 + pi_list[i]*tm[i,1]
+    print(a_1)
+  }
+  
+  a_2 <- pi_list[n+q+1]*tm[n+q+1,n+q+1]
+  
+  a_3 <- 0
+  
+  for (i in 1:(n+q+1)) {
+    if (i <= n+1) {
+      a_3 <- a_3 + pi_list[i]*(i-1)
+    } else {
+      a_3 <- a_3 + pi_list[i]*n
+    }
+  }
+  
+  a_4 <- 0
+  for (i in (n+2):(n+q+1)) {
+    a_4 <- a_4 + (i-n-1)*pi_list[i]
+  }
+  
+  a_5 <- pi_list[n+q+1]*tm[n+q+1,n+q+1]*r
+  
+  answer <- c(a_1,a_2,a_3,a_4,a_5)
+  return(answer)
 }
+
+
